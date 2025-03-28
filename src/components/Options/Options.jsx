@@ -1,17 +1,13 @@
 import s from './Options.module.css'
 
-const Options = ({good, neutral, bad, onClick}) => {
-  return (
-    <div>
-      {/* const totalFeedback = {good} + {neutral} + {bad}; */}
-      {/* console.log(totalFeedback); */}
+const Options = ({good, neutral, bad, reset, totalFeedback, onClick}) => {
 
-      {/* console.log({onClick(good)}); */}
-      
-      <button onClick = {()=> onClick('good')}> Good : {good} </button>
-      <button onClick = {()=> onClick('neutral')}>Neutral : {neutral} </button>
-      <button onClick = {()=> onClick('bad')}> Bad : {bad} </button>
-      {/* <button onClick = {()=> onClick(raset)}> Reset : {raset} </button> */}
+  return (
+      <div className={s.buttons}>
+        <button className={s.btn} onClick = {()=> onClick('good')}> Good : {good} </button>
+        <button className={s.btn} onClick = {()=> onClick('neutral')}>Neutral : {neutral} </button>
+        <button className={s.btn} onClick = {()=> onClick('bad')}> Bad : {bad} </button>
+        {totalFeedback && <button className={s.btn} onClick = {reset}> Reset </button>}
     </div>
   )
 }
