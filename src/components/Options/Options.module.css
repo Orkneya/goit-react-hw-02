@@ -4,6 +4,18 @@
   align-items: center;
   justify-content: center;
 }
-.btn{  
+.btn{
+  border: 3px solid black;
+}
+.btn:hover{  
   border: 3px solid blue;
+}
+.btn-good{
+  background-color: greenyellow;
+}
+.btn-neutral{
+  background-color: yellow;
+}
+.btn-bad{
+  background-color: pink;
 }

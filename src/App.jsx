@@ -1,41 +1,48 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Feedback from './components/Feedback/Feedback'
 import Options from './components/Options/Options'
 import { Notification } from './components/Notification/Notification';
 
 function App() {
-  const [count, setCount] = useState(
-    {
+  const [todos, setTodos] = useState(() => JSON.parse(localStorage.getItem('todos')) ?? []);
+
+  const [count, setCount] = useState(() => {
+    const savedData = JSON.parse(localStorage.getItem('count'));
+    
+    if (savedData) {
+      return savedData;
+    }
+    return {
       good: 0,
       neutral: 0,
       bad: 0
-    }
-  );
-  const[totalFeedback, setTotalFeedback] = useState(0);
-  const [flag, setFlag] = useState(false);
+    };
+  });
 
-  const reset = () =>{
-    setFlag(false);
-    setTotalFeedback(0);
-    setCount({
-    good : 0,
-    neutral : 0,
-    bad : 0
-  })
-    console.log(count.good, count.neutral, count.bad);      
-  }
+  useEffect(() => {
+    localStorage.setItem('count', JSON.stringify(count));
+  }, [count]);
 
-const updateFeedback = feedbackType =>{
-    setCount({
-      ...count,
-      [feedbackType] : count[feedbackType] + 1,
-    });
-    setTotalFeedback(count.good + count.neutral + count.bad );
-    setFlag (true);
-    console.log(totalFeedback, 555, flag);
+  const updateFeedback = (feedbackType) => {
+    if (feedbackType==="reset"){
+      setCount({
+        good : 0,
+        neutral : 0,
+        bad : 0
+      })
+    } else {
+    setCount(prevCount => ({
+      ...prevCount,
+      [feedbackType]: prevCount[feedbackType] + 1
+    }));
+    }  
   };
 
+  let positiveFeedback = 0;
+  const totalFeedback = count.good + count.neutral + count.bad;  
+   (totalFeedback >0) ? (positiveFeedback = Math.round((count.good / totalFeedback) * 100)) : (positiveFeedback = 0);
+  
   return (
     <>
   <h1> Sip Happens Café</h1>
@@ -44,16 +51,17 @@ const updateFeedback = feedbackType =>{
     <Options 
        good = {count.good} 
        neutral = {count.neutral} 
-       bad = {count.bad} 
-       reset = {reset}
-       totalFeedback = {totalFeedback}
+       bad = {count.bad}
+       totalFeedback = {totalFeedback} 
        onClick={updateFeedback} />
 
-    {flag ? < Feedback 
+    {totalFeedback ? < Feedback 
        good = {count.good} 
        neutral = {count.neutral} 
        bad = {count.bad}
-       totalFeedback = {totalFeedback} /> : <Notification/>}
+       positiveFeedback = {positiveFeedback}
+       totalFeedback = {totalFeedback} /> : <Notification/>
+       }
     </>
   )
 }
