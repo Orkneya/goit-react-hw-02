@@ -5,7 +5,6 @@ import Options from './components/Options/Options'
 import { Notification } from './components/Notification/Notification';
 
 function App() {
-  const [todos, setTodos] = useState(() => JSON.parse(localStorage.getItem('todos')) ?? []);
 
   const [count, setCount] = useState(() => {
     const savedData = JSON.parse(localStorage.getItem('count'));
