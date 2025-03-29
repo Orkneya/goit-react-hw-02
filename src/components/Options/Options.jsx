@@ -4,9 +4,9 @@ const Options = ({good, neutral, bad, totalFeedback , onClick}) => {
 
   return (
       <div className={s.buttons}>
-        <button className={`${s.btn} ${s['btn-good']}`} onClick = {()=> onClick('good')}> Good : {good} </button>
-        <button className={`${s.btn} ${s['btn-neutral']}`} onClick = {()=> onClick('neutral')}>Neutral : {neutral} </button>
-        <button className={`${s.btn} ${s['btn-bad']}`} onClick = {()=> onClick('bad')}> Bad : {bad} </button>
+        <button className={`${s.btn} ${s['btn-good']}`} onClick = {()=> onClick('good')}> Good  </button>
+        <button className={`${s.btn} ${s['btn-neutral']}`} onClick = {()=> onClick('neutral')}>Neutral </button>
+        <button className={`${s.btn} ${s['btn-bad']}`} onClick = {()=> onClick('bad')}> Bad  </button>
         {(totalFeedback > 0) && <button className={s.btn} onClick = {()=> onClick('reset')}> Reset </button>}
     </div>
   )
